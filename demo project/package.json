@@ -1,0 +1,32 @@
+{
+  "name": "eco-tourism",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@next-auth/prisma-adapter": "^1.0.7",
+    "@prisma/client": "^7.4.2",
+    "@react-google-maps/api": "^2.20.8",
+    "autoprefixer": "^10.4.27",
+    "bcryptjs": "^3.0.3",
+    "next": "16.1.6",
+    "next-auth": "^4.24.13",
+    "postcss": "^8.5.8",
+    "prisma": "^7.4.2",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-icons": "^5.6.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.1",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.6",
+    "tailwindcss": "^4.2.1",
+    "typescript": "^5.9.3"
+  }
+}
