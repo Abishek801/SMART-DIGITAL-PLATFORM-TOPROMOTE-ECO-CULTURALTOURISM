@@ -1,0 +1,198 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* MASTER PROMPT COLOR PALETTE */
+    --ink: #0D0D0D;
+    --ink-soft: #1A1A1A;
+    --moss: #1C3829;
+    --canopy: #2D5A3D;
+    --leaf: #4A8B5C;
+    --sage: #7BAE8A;
+    --mist: #B8D4BF;
+    --earth: #8B5E3C;
+    --clay: #C4845A;
+    --sand: #E8D5B7;
+    --gold: #D4A843;
+    --white: #F7F4EF;
+
+    /* TRAVELER Palette */
+    --t-primary: #4A8B5C;
+    --t-deep: #1C3829;
+    --t-mid: #2D5A3D;
+    --t-light: #7BAE8A;
+    --t-mist: #B8D4BF;
+    --t-glow: rgba(74, 139, 92, 0.15);
+    --t-border: rgba(74, 139, 92, 0.25);
+
+    /* ADMIN Palette */
+    --a-primary: #D4A843;
+    --a-deep: #5C3D0D;
+    --a-mid: #8B5E3C;
+    --a-light: #C4845A;
+    --a-mist: #E8D5B7;
+    --a-glow: rgba(212, 168, 67, 0.12);
+    --a-border: rgba(212, 168, 67, 0.25);
+
+    /* ADMIN COMMAND CENTER (Phase 16) */
+    --admin-bg: #09090B;
+    --admin-card: #111113;
+    --admin-hover: #18181B;
+    --admin-border: #27272A;
+    --admin-border-light: #3F3F46;
+    --admin-gold: #D4A843;
+    --admin-gold-muted: #92742E;
+    --admin-gold-glow: rgba(212, 168, 67, 0.12);
+    --admin-gold-border: rgba(212, 168, 67, 0.2);
+    --admin-text-primary: #FAFAFA;
+    --admin-text-secondary: #A1A1AA;
+    --admin-text-muted: #71717A;
+
+    /* Global Background Base (Radial Depth) */
+    --bg-main: radial-gradient(ellipse 80% 50% at 20% 0%, rgba(28,56,41,0.4) 0%, transparent 60%), 
+               radial-gradient(ellipse 60% 40% at 80% 100%, rgba(139,94,60,0.15) 0%, transparent 50%), 
+               #0D0D0D;
+  }
+
+  ::selection {
+    background: var(--leaf);
+    color: var(--ink);
+  }
+
+  body {
+    background: var(--bg-main);
+    background-attachment: fixed;
+    color: var(--white);
+    font-family: var(--font-satoshi), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-cormorant), Georgia, serif;
+    letter-spacing: -0.05em;
+  }
+}
+
+@layer components {
+  /* GLASSMORPHISM - LUXURY DEPTH */
+  .glass {
+    background-color: rgba(26, 26, 26, 0.4);
+    @apply backdrop-blur-3xl;
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.05),
+                0 4px 24px -1px rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.08); /* No solid borders per spec */
+  }
+
+  .glass-dark {
+    @apply bg-black/60 backdrop-blur-2xl;
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+
+  /* BUTTONS & UI */
+  .btn-primary {
+    @apply h-14 px-8 flex items-center justify-center gap-2 hover:scale-[0.98] active:scale-95 transition-all duration-300;
+    border-radius: 9999px;
+    background-color: var(--white);
+    color: var(--ink);
+    font-family: var(--font-clash), sans-serif;
+    font-weight: 700;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 1px 3px rgba(0,0,0,0.4), 0 8px 32px rgba(0,0,0,0.3);
+  }
+
+  .btn-outline {
+    @apply h-14 px-8 border text-white flex items-center justify-center gap-2 transition-all duration-300 backdrop-blur-sm;
+    border-color: rgba(247, 244, 239, 0.2);
+    border-radius: 9999px;
+    font-family: var(--font-clash), sans-serif;
+    font-weight: 500;
+  }
+  .btn-outline:hover {
+    background-color: rgba(247, 244, 239, 0.05);
+  }
+
+  .card {
+    @apply glass overflow-hidden transition-all duration-500;
+    border-radius: 20px;
+  }
+  .card:hover {
+    border-color: rgba(74, 139, 92, 0.3);
+  }
+
+  /* TYPOGRAPHY */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-br from-leaf via-sage to-mist;
+  }
+
+  .text-stroke {
+    -webkit-text-stroke: 1px rgba(255,255,255,0.2);
+    @apply text-transparent;
+  }
+
+  .text-stroke-leaf {
+    -webkit-text-stroke: 1px rgba(74, 139, 92, 0.4);
+    @apply text-transparent;
+  }
+
+  /* ADMIN UTILITIES */
+  .admin-glass {
+    background: rgba(17, 17, 19, 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--admin-border);
+  }
+
+  .admin-input {
+    @apply w-full bg-[#18181B] border border-[#27272A] rounded-lg px-3 py-2 text-sm text-[#FAFAFA] font-sans focus:outline-none focus:border-[#D4A843]/30 transition-all;
+  }
+
+  .admin-btn-primary {
+    @apply bg-[#D4A843] text-[#09090B] px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#E4B853] transition-colors flex items-center justify-center gap-2;
+  }
+}
+
+@layer utilities {
+  .tracking-tightest { letter-spacing: -0.05em; }
+  .tracking-widest-xl { letter-spacing: 0.3em; }
+
+  /* MASONRY HELPERS */
+  .masonry-item {
+    break-inside: avoid;
+    @apply mb-6;
+  }
+
+  /* ANIMATIONS */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-pulse-subtle {
+    animation: pulseSubtle 4s ease-in-out infinite;
+  }
+}
+
+/* KEYFRAMES */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes pulseSubtle {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* CUSTOM SCROLLBAR */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--ink); }
+::-webkit-scrollbar-thumb {
+  background: var(--canopy);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--leaf); }
+
+/* CUSTOM CURSOR HIDE (Handled by component) */
+.custom-cursor-none * {
+  cursor: none !important;
+}

@@ -1,0 +1,42 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -------------------< com.ecoculture:ecoculture-api >--------------------
+[INFO] Building EcoCulture API 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ ecoculture-api ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 4 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ ecoculture-api ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 52 source files with javac [debug release 17] to target\classes
+[INFO] /C:/Users/abish/Documents/MINI_PROJECT/ecoculture/backend/src/main/java/com/ecoculture/controller/ShopController.java: C:\Users\abish\Documents\MINI_PROJECT\ecoculture\backend\src\main\java\com\ecoculture\controller\ShopController.java uses unchecked or unsafe operations.
+[INFO] /C:/Users/abish/Documents/MINI_PROJECT/ecoculture/backend/src/main/java/com/ecoculture/controller/ShopController.java: Recompile with -Xlint:unchecked for details.
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /C:/Users/abish/Documents/MINI_PROJECT/ecoculture/backend/src/main/java/com/ecoculture/service/BookingService.java:[46,39] cannot find symbol
+  symbol:   method getAvgCostPerNight()
+  location: variable destination of type com.ecoculture.model.Destination
+[INFO] 1 error
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  7.647 s
+[INFO] Finished at: 2026-03-24T10:32:22+05:30
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.11.0:compile (default-compile) on project ecoculture-api: Compilation failure
+[ERROR] /C:/Users/abish/Documents/MINI_PROJECT/ecoculture/backend/src/main/java/com/ecoculture/service/BookingService.java:[46,39] cannot find symbol
+[ERROR]   symbol:   method getAvgCostPerNight()
+[ERROR]   location: variable destination of type com.ecoculture.model.Destination
+[ERROR] 
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

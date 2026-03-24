@@ -1,0 +1,253 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                String    @id @default(cuid())
+  email             String    @unique
+  name              String?
+  image             String?
+  passwordHash      String?
+  emailVerified     DateTime?
+  role              String    @default("TRAVELER")
+  ecoScore          Int       @default(0)
+  loginAttempts     Int       @default(0)
+  lockedUntil       DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  // Role-specific Profile IDs (Optional)
+  guideId           String?   @unique
+  shopId            String?   @unique
+
+  // Relations
+  guideProfile      GuideProfile?   @relation(fields: [guideId], references: [id])
+  artisanProfile    ArtisanProfile? @relation(fields: [shopId], references: [id])
+
+  accounts     Account[]
+  sessions     Session[]
+  itineraries  Itinerary[]
+  bookings     Booking[]
+  orders       Order[]
+  reviews      Review[]
+  savedDests   SavedDestination[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Destination {
+  id                 String   @id @default(cuid())
+  name               String
+  slug               String   @unique
+  description        String
+  shortDescription   String
+  category           String
+  country            String
+  region             String
+  latitude           Float
+  longitude          Float
+  sustainabilityScore Int     @default(0)
+  carbonSaved        Float    @default(0)
+  imageUrl           String
+  galleryUrls        String   // JSON array as string
+  highlights         String   // JSON array as string
+  bestSeason         String
+  avgCost            Float
+  difficulty         String   @default("EASY")
+  featured           Boolean  @default(false)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  // Ownership
+  guideId            String?
+  guide              GuideProfile? @relation(fields: [guideId], references: [id])
+
+  itineraryItems ItineraryItem[]
+  bookings       Booking[]
+  reviews        Review[]
+  savedBy        SavedDestination[]
+}
+
+model Itinerary {
+  id             String   @id @default(cuid())
+  userId         String
+  title          String
+  destination    String
+  duration       Int
+  travelStyle    String
+  budget         String
+  carbonFootprint Float   @default(0)
+  status         String @default("DRAFT")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user  User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items ItineraryItem[]
+}
+
+model ItineraryItem {
+  id            String   @id @default(cuid())
+  itineraryId   String
+  destinationId String?
+  day           Int
+  time          String?
+  activity      String
+  description   String?
+  duration      Int?
+  cost          Float?
+  carbonImpact  Float?
+  type          String
+
+  itinerary   Itinerary    @relation(fields: [itineraryId], references: [id], onDelete: Cascade)
+  destination Destination? @relation(fields: [destinationId], references: [id])
+}
+
+model Product {
+  id           String      @id @default(cuid())
+  name         String
+  slug         String      @unique
+  description  String
+  price        Float
+  category     String
+  imageUrl     String
+  galleryUrls  String      // JSON array as string
+  stock        Int         @default(0)
+  origin       String
+  artisan      String?
+  artisanAvatar String?
+  ecoScore     Int         @default(0)
+  certifications String    // JSON array as string
+  featured     Boolean     @default(false)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  // Ownership
+  shopId       String?
+  shop         ArtisanProfile? @relation(fields: [shopId], references: [id])
+
+  orderItems   OrderItem[]
+}
+
+model Order {
+  id          String      @id @default(cuid())
+  userId      String
+  status      String @default("PENDING")
+  total       Float
+  address     String      // JSON as string
+  paymentRef  String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  user  User        @relation(fields: [userId], references: [id])
+  items OrderItem[]
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  productId String
+  quantity  Int
+  price     Float
+
+  order   Order   @relation(fields: [orderId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+}
+
+model Booking {
+  id            String        @id @default(cuid())
+  userId        String
+  destinationId String
+  checkIn       DateTime
+  checkOut      DateTime
+  guests        Int
+  status        String @default("PENDING")
+  totalCost     Float
+  notes         String?
+  createdAt     DateTime      @default(now())
+
+  user        User        @relation(fields: [userId], references: [id])
+  destination Destination @relation(fields: [destinationId], references: [id])
+}
+
+model Review {
+  id            String   @id @default(cuid())
+  userId        String
+  destinationId String
+  rating        Int
+  title         String
+  body          String
+  ecoRating     Int
+  createdAt     DateTime @default(now())
+
+  user        User        @relation(fields: [userId], references: [id])
+  destination Destination @relation(fields: [destinationId], references: [id])
+}
+
+model SavedDestination {
+  id            String   @id @default(cuid())
+  userId        String
+  destinationId String
+  savedAt       DateTime @default(now())
+
+  user        User        @relation(fields: [userId], references: [id])
+  destination Destination @relation(fields: [destinationId], references: [id])
+
+  @@unique([userId, destinationId])
+}
+
+model GuideProfile {
+  id            String    @id @default(cuid())
+  bio           String?
+  specialties   String?   // JSON
+  languages     String?   // JSON
+  experience    Int       @default(0)
+  certifications String?  // JSON
+  rating        Float     @default(0)
+  verified      Boolean   @default(false)
+  
+  user          User?
+  destinations  Destination[]
+}
+
+model ArtisanProfile {
+  id            String    @id @default(cuid())
+  shopName      String
+  bio           String?
+  story         String?
+  location      String?
+  payoutDetails String?   // JSON
+  rating        Float     @default(0)
+  verified      Boolean   @default(false)
+
+  user          User?
+  products      Product[]
+}
